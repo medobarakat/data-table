@@ -7,13 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CircularProgress, Container } from "@mui/material";
+import axios from "axios";
 
 export default function BasicTable() {
   const [quickRow, setQuickRow] = useState([]);
   const [fullRow, setFullRow] = useState([]);
   const [businessRow, setBusinessRow] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState();
   useEffect(() => {
     QuickRowHandle();
     FullRowHandle();
@@ -22,100 +23,73 @@ export default function BasicTable() {
 
   const QuickRowHandle = () => {
     setLoading(true);
-
-    console.log("quick");
-    setLoading(false);
+    const url =
+      "http://44.202.140.227:8081/community/api/v1/registration/get?registrationType=EMAIL";
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(url, config)
+      .then((res) => {
+        setQuickRow(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(true);
+        setError(err.response.data[0].message);
+      });
   };
 
   const FullRowHandle = () => {
     setLoading(true);
-
-    console.log("full");
-    setLoading(false);
+    const url =
+      "http://44.202.140.227:8081/community/api/v1/registration/get?registrationType=FULL_REGISTRATION";
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(url, config)
+      .then((res) => {
+        setFullRow(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(true);
+        setError(err.response.data[0].message);
+      });
   };
 
   const BusinessRowHandle = () => {
     setLoading(true);
-
-    setBusinessRow([
-      {
-        id: "20a3d3ba-0673-42d8-a080-9e96023dce89",
-        email: "string@V.com",
-        address1: "string",
-        address2: "string",
-        city: "string",
-        state: "string",
-        zipCode: "string",
-        country: "string",
-        businessName: "string",
-        name: "string",
+    const url =
+      "http://44.202.140.227:8081/community/api/v1/registration/get?registrationType=BUSINESS";
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
       },
-      {
-        id: "f45ac0ac-3844-4b53-9ce6-fa24868b68f1",
-        email: "string@V2.com",
-        address1: "string",
-        address2: "string",
-        city: "string",
-        state: "string",
-        zipCode: "string",
-        country: "string",
-        businessName: "string",
-        name: "string",
-      },
-      {
-        id: "00977a89-de5a-4f45-b97d-69b256aed610",
-        email: "string@Va2.com",
-        address1: "string",
-        address2: "string",
-        city: "string",
-        state: "string",
-        zipCode: "string",
-        country: "string",
-        businessName: "string",
-        name: "string",
-      },
-      {
-        id: "33b618a1-b26a-45e4-8e26-67a10706b5c8",
-        email: "string@Va22.com",
-        address1: "string",
-        address2: "string",
-        city: "string",
-        state: "string",
-        zipCode: "string",
-        country: "string",
-        businessName: "string",
-        name: "string",
-      },
-    ]);
-    setLoading(false);
+    };
+    axios
+      .get(url, config)
+      .then((res) => {
+        setBusinessRow(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(true);
+        setError(err.response.data[0].message);
+      });
   };
-
-  // const handleFormSubmitApi = values => {
-  //   setLoading(true);
-  //   const url = Base_Url + Register_Api;
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   };
-  //   axios
-  //     .get(url, config)
-  //     .then(res => {
-  //        console.log(res);
-  //       setLoading(false);
-  //     })
-  //     .catch(err => {
-  //       setLoading(true);
-  //       setRequestError(err.response.data[0].message);
-  //     });
-  // };
 
   return (
     <div style={{ textAlign: "center" }}>
       <h1 style={{ margin: "20px 0" }}>Data Table</h1>
 
       <>
-      {loading === true ? (
+        {loading === true ? (
           <CircularProgress style={{ margin: "20px" }} />
         ) : (
           <>
@@ -125,34 +99,18 @@ export default function BasicTable() {
                 <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
                   <TableHead>
                     <TableRow sx={{ backgroundColor: "#9999", color: "white" }}>
-                      <TableCell>Email</TableCell>
-                      <TableCell>Address 1</TableCell>
-                      <TableCell>Address 2</TableCell>
-                      <TableCell>City</TableCell>
-                      <TableCell>State</TableCell>
-                      <TableCell>Zip Code</TableCell>
-                      <TableCell>Country</TableCell>
-                      <TableCell>Business Name</TableCell>
-                      <TableCell>Name</TableCell>
+                      <TableCell sx={{textAlign:"center"}}>Email</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {quickRow.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell>{row.email}</TableCell>
-                        <TableCell>{row.address1}</TableCell>
-                        <TableCell>{row.address2}</TableCell>
-                        <TableCell>{row.city}</TableCell>
-                        <TableCell>{row.state}</TableCell>
-                        <TableCell>{row.zipCode}</TableCell>
-                        <TableCell>{row.country}</TableCell>
-                        <TableCell>{row.businessName}</TableCell>
-                        <TableCell>{row.name}</TableCell>
+                        <TableCell sx={{textAlign:"center"}}>{row.email}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -167,33 +125,35 @@ export default function BasicTable() {
                   <TableHead>
                     <TableRow sx={{ backgroundColor: "#9999", color: "white" }}>
                       <TableCell>Email</TableCell>
+                      <TableCell>First Name</TableCell>
+                      <TableCell>Last Name</TableCell>
                       <TableCell>Address 1</TableCell>
                       <TableCell>Address 2</TableCell>
                       <TableCell>City</TableCell>
                       <TableCell>State</TableCell>
                       <TableCell>Zip Code</TableCell>
                       <TableCell>Country</TableCell>
-                      <TableCell>Business Name</TableCell>
-                      <TableCell>Name</TableCell>
+                      <TableCell>phone</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {fullRow.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
                         <TableCell>{row.email}</TableCell>
+                        <TableCell>{row.firstName}</TableCell>
+                        <TableCell>{row.lastName}</TableCell>
                         <TableCell>{row.address1}</TableCell>
                         <TableCell>{row.address2}</TableCell>
                         <TableCell>{row.city}</TableCell>
                         <TableCell>{row.state}</TableCell>
                         <TableCell>{row.zipCode}</TableCell>
                         <TableCell>{row.country}</TableCell>
-                        <TableCell>{row.businessName}</TableCell>
-                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.phoneNo}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -202,7 +162,7 @@ export default function BasicTable() {
             </Container>
             <br />
             <h3>Business Registeration</h3>
-            <Container>
+            <Container sx={{ marginBottom: 20 }}>
               <TableContainer component={Paper}>
                 <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
                   <TableHead>
@@ -221,7 +181,7 @@ export default function BasicTable() {
                   <TableBody>
                     {businessRow.map((row) => (
                       <TableRow
-                        key={row.name}
+                        key={row.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
