@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Container } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
 
 export default function BasicTable() {
   const [quickRow, setQuickRow] = useState([]);
@@ -92,46 +92,21 @@ export default function BasicTable() {
 
   // const handleFormSubmitApi = values => {
   //   setLoading(true);
-  //   setRequestError(false);
-  //   // console.log(values)
-  //   // console.log(body)
   //   const url = Base_Url + Register_Api;
   //   const config = {
   //     headers: {
   //       'Content-Type': 'application/json',
   //     },
   //   };
-  //   const body = {
-  //     email: values.email,
-  //     address1: values.address1,
-  //     address2: values.address2,
-  //     city: values.city,
-  //     state: values.state,
-  //     zipCode: values.zipCode,
-  //     country: country,
-  //     businessName: values.BusinessName,
-  //     phoneNo: values.phone,
-  //     businessServices: [
-  //       {
-  //         id: selectedService.id,
-  //         service: selectedService.service,
-  //       },
-  //     ],
-  //     registrationType: 'BUSINESS',
-  //   };
-  //   console.log(JSON.stringify(body));
   //   axios
-  //     .post(url, body, config)
+  //     .get(url, config)
   //     .then(res => {
   //        console.log(res);
   //       setLoading(false);
-  //       console.log(res.data.message);
-  //       setModalVisible(true);
   //     })
   //     .catch(err => {
-  //       setLoading(false);
+  //       setLoading(true);
   //       setRequestError(err.response.data[0].message);
-  //       // setError(true);
   //     });
   // };
 
@@ -140,8 +115,8 @@ export default function BasicTable() {
       <h1 style={{ margin: "20px 0" }}>Data Table</h1>
 
       <>
-        {loading === true ? (
-          <h3>Loading...</h3>
+      {loading === true ? (
+          <CircularProgress style={{ margin: "20px" }} />
         ) : (
           <>
             <h3>Quick Registeration</h3>
