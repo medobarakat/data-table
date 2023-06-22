@@ -1,58 +1,274 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Container } from '@mui/material';
-
-const rows = [
-  { name: 'Frozen yoghurt', calories: 159, fat: 6.0, carbs: 24, protein: 4.0 },
-  { name: 'Ice cream sandwich', calories: 237, fat: 9.0, carbs: 37, protein: 4.3 },
-  { name: 'Eclair', calories: 262, fat: 16.0, carbs: 24, protein: 6.0 },
-  { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3 },
-  { name: 'Gingerbread', calories: 356, fat: 16.0, carbs: 49, protein: 3.9 },
-];
+import React, { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Container } from "@mui/material";
 
 export default function BasicTable() {
+  const [quickRow, setQuickRow] = useState([]);
+  const [fullRow, setFullRow] = useState([]);
+  const [businessRow, setBusinessRow] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    QuickRowHandle();
+    FullRowHandle();
+    BusinessRowHandle();
+  }, []);
+
+  const QuickRowHandle = () => {
+    setLoading(true);
+
+    console.log("quick");
+    setLoading(false);
+  };
+
+  const FullRowHandle = () => {
+    setLoading(true);
+
+    console.log("full");
+    setLoading(false);
+  };
+
+  const BusinessRowHandle = () => {
+    setLoading(true);
+
+    setBusinessRow([
+      {
+        id: "20a3d3ba-0673-42d8-a080-9e96023dce89",
+        email: "string@V.com",
+        address1: "string",
+        address2: "string",
+        city: "string",
+        state: "string",
+        zipCode: "string",
+        country: "string",
+        businessName: "string",
+        name: "string",
+      },
+      {
+        id: "f45ac0ac-3844-4b53-9ce6-fa24868b68f1",
+        email: "string@V2.com",
+        address1: "string",
+        address2: "string",
+        city: "string",
+        state: "string",
+        zipCode: "string",
+        country: "string",
+        businessName: "string",
+        name: "string",
+      },
+      {
+        id: "00977a89-de5a-4f45-b97d-69b256aed610",
+        email: "string@Va2.com",
+        address1: "string",
+        address2: "string",
+        city: "string",
+        state: "string",
+        zipCode: "string",
+        country: "string",
+        businessName: "string",
+        name: "string",
+      },
+      {
+        id: "33b618a1-b26a-45e4-8e26-67a10706b5c8",
+        email: "string@Va22.com",
+        address1: "string",
+        address2: "string",
+        city: "string",
+        state: "string",
+        zipCode: "string",
+        country: "string",
+        businessName: "string",
+        name: "string",
+      },
+    ]);
+    setLoading(false);
+  };
+
+  // const handleFormSubmitApi = values => {
+  //   setLoading(true);
+  //   setRequestError(false);
+  //   // console.log(values)
+  //   // console.log(body)
+  //   const url = Base_Url + Register_Api;
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
+  //   const body = {
+  //     email: values.email,
+  //     address1: values.address1,
+  //     address2: values.address2,
+  //     city: values.city,
+  //     state: values.state,
+  //     zipCode: values.zipCode,
+  //     country: country,
+  //     businessName: values.BusinessName,
+  //     phoneNo: values.phone,
+  //     businessServices: [
+  //       {
+  //         id: selectedService.id,
+  //         service: selectedService.service,
+  //       },
+  //     ],
+  //     registrationType: 'BUSINESS',
+  //   };
+  //   console.log(JSON.stringify(body));
+  //   axios
+  //     .post(url, body, config)
+  //     .then(res => {
+  //        console.log(res);
+  //       setLoading(false);
+  //       console.log(res.data.message);
+  //       setModalVisible(true);
+  //     })
+  //     .catch(err => {
+  //       setLoading(false);
+  //       setRequestError(err.response.data[0].message);
+  //       // setError(true);
+  //     });
+  // };
+
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h1 style={{ margin: '20px 0' }}>Data Table</h1>
-      <Container >
+    <div style={{ textAlign: "center" }}>
+      <h1 style={{ margin: "20px 0" }}>Data Table</h1>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: '100%' }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </Container>
-
+      <>
+        {loading === true ? (
+          <h3>Loading...</h3>
+        ) : (
+          <>
+            <h3>Quick Registeration</h3>
+            <Container>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: "#9999", color: "white" }}>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Address 1</TableCell>
+                      <TableCell>Address 2</TableCell>
+                      <TableCell>City</TableCell>
+                      <TableCell>State</TableCell>
+                      <TableCell>Zip Code</TableCell>
+                      <TableCell>Country</TableCell>
+                      <TableCell>Business Name</TableCell>
+                      <TableCell>Name</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {quickRow.map((row) => (
+                      <TableRow
+                        key={row.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell>{row.email}</TableCell>
+                        <TableCell>{row.address1}</TableCell>
+                        <TableCell>{row.address2}</TableCell>
+                        <TableCell>{row.city}</TableCell>
+                        <TableCell>{row.state}</TableCell>
+                        <TableCell>{row.zipCode}</TableCell>
+                        <TableCell>{row.country}</TableCell>
+                        <TableCell>{row.businessName}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Container>
+            <br />
+            <h3>Full Registeration</h3>
+            <Container>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: "#9999", color: "white" }}>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Address 1</TableCell>
+                      <TableCell>Address 2</TableCell>
+                      <TableCell>City</TableCell>
+                      <TableCell>State</TableCell>
+                      <TableCell>Zip Code</TableCell>
+                      <TableCell>Country</TableCell>
+                      <TableCell>Business Name</TableCell>
+                      <TableCell>Name</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {fullRow.map((row) => (
+                      <TableRow
+                        key={row.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell>{row.email}</TableCell>
+                        <TableCell>{row.address1}</TableCell>
+                        <TableCell>{row.address2}</TableCell>
+                        <TableCell>{row.city}</TableCell>
+                        <TableCell>{row.state}</TableCell>
+                        <TableCell>{row.zipCode}</TableCell>
+                        <TableCell>{row.country}</TableCell>
+                        <TableCell>{row.businessName}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Container>
+            <br />
+            <h3>Business Registeration</h3>
+            <Container>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: "#9999", color: "white" }}>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Address 1</TableCell>
+                      <TableCell>Address 2</TableCell>
+                      <TableCell>City</TableCell>
+                      <TableCell>State</TableCell>
+                      <TableCell>Zip Code</TableCell>
+                      <TableCell>Country</TableCell>
+                      <TableCell>Business Name</TableCell>
+                      <TableCell>Name</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {businessRow.map((row) => (
+                      <TableRow
+                        key={row.name}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell>{row.email}</TableCell>
+                        <TableCell>{row.address1}</TableCell>
+                        <TableCell>{row.address2}</TableCell>
+                        <TableCell>{row.city}</TableCell>
+                        <TableCell>{row.state}</TableCell>
+                        <TableCell>{row.zipCode}</TableCell>
+                        <TableCell>{row.country}</TableCell>
+                        <TableCell>{row.businessName}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Container>
+          </>
+        )}
+      </>
     </div>
   );
 }
